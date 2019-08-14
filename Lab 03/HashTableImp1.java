@@ -5,7 +5,7 @@
  * S I T H.O.F
  * Implementation of the hashTable
  *********************************************/
-public class HashTableImp implements HashTable {
+public class HashTableImp1 implements HashTable {
 
     /* Put your code here */
     //we need to define linked list
@@ -25,7 +25,7 @@ public class HashTableImp implements HashTable {
     //constructor specify the number of buckets neeeded
 
     //number of buckets must be given
-    public HashTableImp(int numOfBuckets) {
+    public HashTableImp1(int numOfBuckets) {
         // create a open hash table with given number of buckets
 
         hashTable=new nodeList[numOfBuckets];
@@ -115,7 +115,7 @@ compute the huge integer directly, but instead compute its remainder mod m,
 
         for(int i=0;i<key.length();i++){
             //use of division is leads to lot of collisons . USe 31 prime number as a multiplier
-            hash=( hash + key.charAt(i));//hash*31+key.charAt(i);//add ascii value of the characters
+            hash=(31* hash + key.charAt(i))%hashTable.length;//hash*31+key.charAt(i);//add ascii value of the characters
             //casting is not needed
         }
 
@@ -150,4 +150,4 @@ compute the huge integer directly, but instead compute its remainder mod m,
     }
 
 
-}// end HashTableImp 
+}// end HashTableImp
