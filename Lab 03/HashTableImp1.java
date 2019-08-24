@@ -141,6 +141,7 @@ compute the huge integer directly, but instead compute its remainder mod m,
             sum+=counter;
             x2=x2+(int) Math.pow(counter,2);
             System.out.println((i+1)+":"+counter);
+           // System.out.println(counter);
         }
         float avg = (float)(sum/(float)size);
         float var = (float)(x2/size) - (float)(Math.pow(avg, 2));

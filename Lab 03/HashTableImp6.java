@@ -5,7 +5,7 @@
  * S I T H.O.F
  * Implementation of the hashTable
  *********************************************/
-public class HashTableImp3 implements HashTable {
+public class HashTableImp6 implements HashTable {
 
     /* Put your code here */
     //we need to define linked list
@@ -25,7 +25,7 @@ public class HashTableImp3 implements HashTable {
     //constructor specify the number of buckets neeeded
 
     //number of buckets must be given
-    public HashTableImp3(int numOfBuckets) {
+    public HashTableImp6(int numOfBuckets) {
         // create a open hash table with given number of buckets
 
         hashTable=new nodeList[numOfBuckets];
@@ -110,16 +110,27 @@ public class HashTableImp3 implements HashTable {
     compute the huge integer directly, but instead compute its remainder mod m,
     * */
     private int hashFunction(String key){
-        //key is the input here
-        int hash=0;
+        long hash = 0;                                  //Initial hash value
+        int hashVal = 0;
+        int i = 0;
 
-        for(int i=0;i<key.length();i++){
-            //use of division is leads to lot of collisons . USe 31 prime number as a multiplier
-            hash=( hash*5381 + key.charAt(i))% hashTable.length;//hash*31+key.charAt(i);//add ascii value of the characters
-            //casting is not needed
+        //Iterate over each character of the string
+        for(char c: key.toCharArray()){         //Convert the given string in to a character array
+            /*
+            * Hash Functions
+            *   Absolute values may include in some functions because even long data type may not be sufficient to handle hash value (OverFlows)
+            *   Long data type is chosen as hash value can be pretty large upon repeated multiplication by a constant
+            */
+//            hash = Math.abs(31L * hash + (long)c);
+//          hash += (long)c;
+//          hash = hash + (long)c * 6L / 10L;
+         hash = Math.abs(hash + (long)c * (long)Math.pow(128,i));
+            i++;
         }
-
-        return (hash % hashTable.length);//smaller size fixed to fixed to the size of thr hashtable
+        if(hash < 0) System.out.println("OverFlow");    //Indicate the hash overflows
+        hash = hash % hashTable.length;           //Get the appropriate bucket in which the key should be put
+        hashVal = (int)hash;
+        return hashVal;                                 //Return the final hash value
 
     }
 
@@ -141,7 +152,9 @@ public class HashTableImp3 implements HashTable {
             sum+=counter;
             x2=x2+(int) Math.pow(counter,2);
             System.out.println((i+1)+":"+counter);
+            //System.out.println((i+1));
             //System.out.println(counter);
+
         }
         float avg = (float)(sum/(float)size);
         float var = (float)(x2/size) - (float)(Math.pow(avg, 2));
